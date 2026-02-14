@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For Sumi</title>
+
+<style>
+
+/* Background */
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    font-family:'Segoe UI',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-white(135deg,#ff4e8a,#6a5cff);
+    color:black;
+}
+
+/* Intro Screen */
+#intro{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:3rem;
+    letter-spacing:8px;
+    animation:fadeOut 3s forwards;
+    animation-delay:2s;
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* Card */
+.card{
+    background:white;
+    color:#ff4e8a;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    transform:scale(.8);
+    animation:pop 1.5s forwards;
+}
+
+@keyframes pop{
+    to{transform:scale(1);}
+}
+
+/* Buttons */
+
+button{
+    border:none;
+    padding:14px 26px;
+    border-radius:40px;
+    font-size:18px;
+    cursor:pointer;
+    margin:10px;
+}
+
+/* YES Glow */
+#yes{
+    background:#ff4e8a;
+    color:white;
+    box-shadow:0 0 20px #ff4e8a;
+    animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{box-shadow:0 0 10px #ff4e8a;}
+    to{box-shadow:0 0 35px #ff4e8a;}
+}
+
+#no{
+    background:#eee;
+}
+
+/* Floating hearts */
+
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* Stickers */
+
+.sticker{
+    position:absolute middle;
+    width:200px;
+    pointer-events:none;
+    animation:stickerFloat 4s ease-in-out infinite;
+}
+
+@keyframes stickerFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-20px);}
+}
+
+.s1{top:5%; left:5%;}
+.s2{bottom:5%; right:5%;}
+.s3{top:60%; left:8%;}
+
+/* Celebration */
+
+#celebrate{
+    position:absolute;
+    display:none;
+    font-size:2.5rem;
+    text-align:center;
+}
+
+/* Secret Letter */
+
+#letter{
+    display:none;
+    margin-top:15px;
+    font-size:18px;
+    color:#ff4e8a;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="intro">✨🥳</div>
+
+<!-- Stickers -->
+<div class="card" id="card">
+
+<h1>Hey Sumi</h1>
+
+<h2 id="typing"></h2>
+
+<button id="yes">YES 💖</button>
+<button id="no">NO 🙈</button>
+
+<br>
+
+
+<div id="letter">
+You are truly special, and spending time with you always makes the day brighter.  
+Happy Valentine's Day 🙂
+</div>
+
+</div>
+
+<div id="celebrate">
+🎉 YAAYY! 🎉  
+<br><br>
+<img src="https://media.giphy.com/media/NxC8VtyxqhMtpLoEEN/giphy.gif" class="sticker s1">
+</div>
+
+
+<script>
+
+/* Typing Effect */
+
+let text="Will you be my Valentine🤭?";
+let i=0;
+
+function type(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(type,60);
+    }
+}
+
+setTimeout(type,2500);
+
+
+/* Floating Hearts */
+
+setInterval(()=>{
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>heart.remove(),6000);
+},300);
+
+
+/* Running NO button */
+
+let no=document.getElementById("no");
+
+no.onmouseover=()=>{
+    no.style.position="absolute";
+    no.style.left=Math.random()*80+"vw";
+    no.style.top=Math.random()*80+"vh";
+};
+
+
+/* YES Celebration + Fireworks */
+
+document.getElementById("yes").onclick=()=>{
+
+    document.getElementById("card").style.display="none";
+    document.getElementById("celebrate").style.display="block";
+
+    // fireworks
+    for(let j=0;j<120;j++){
+        let spark=document.createElement("div");
+        spark.innerHTML="✨";
+        spark.style.position="absolute";
+        spark.style.left=Math.random()*100+"vw";
+        spark.style.top=Math.random()*100+"vh";
+        spark.style.fontSize="24px";
+
+        document.body.appendChild(spark);
+
+        setTimeout(()=>spark.remove(),2000);
+    }
+};
+
+
+/* Secret Letter */
+
+function openLetter(){
+    document.getElementById("letter").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
